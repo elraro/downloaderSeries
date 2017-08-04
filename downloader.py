@@ -1,7 +1,6 @@
 from robobrowser import RoboBrowser
 import wget
 import sys
-import re
 
 if len(sys.argv) < 2:
     print("Uso: downloader <serie>")
