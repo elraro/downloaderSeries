@@ -7,7 +7,7 @@ if len(sys.argv) < 2:
     print("Ejemplo: downloader http://www.newpct.com/todos-los-capitulos/series/cronicas-vampiricas/")
     exit(-1)
 
-print("Descargando serie " + sys.argv[1])
+print("Descargando serie " + sys.argv[1].split("/")[5] + "\n")
 browser = RoboBrowser(parser="lxml", history=True)
 browser.open(sys.argv[1]) # 'http://www.newpct.com/todos-los-capitulos/series/cronicas-vampiricas/'
 soup = browser.parsed
@@ -19,7 +19,7 @@ for t in temp:
             browser.open(t["href"])
             torrent = browser.parsed
             t_link = torrent.find("span", {"id" : "content-torrent"}).find("a", href=True)
-            wget.download(t_link["href"], out="torrent" + str(count) + ".torrent")
+            wget.download(t_link["href"], out=sys.argv[1].split("/")[5] + str(count) + ".torrent")	
             print("Descargado capítulo " + str(count))
             count += 1
         except Exception as e:
