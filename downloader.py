@@ -10,15 +10,13 @@ if len(sys.argv) < 2:
 print("Descargando serie " + sys.argv[1].split("/")[5] + "\n")
 browser = RoboBrowser(parser="lxml", history=True)
 browser.open(sys.argv[1]) # 'http://www.newpct.com/todos-los-capitulos/series/cronicas-vampiricas/'
-soup = browser.parsed
-temp = soup.find("ul", {"class" : "menu"}).find_all("a", href=True)
+temp = browser.find("ul", {"class" : "menu"}).find_all("a", href=True)
 count = 0
 for t in temp:
     if t["href"] != "#":
         try:
             browser.open(t["href"])
-            torrent = browser.parsed
-            t_link = torrent.find("span", {"id" : "content-torrent"}).find("a", href=True)
+            t_link = browser.find("span", {"id" : "content-torrent"}).find("a", href=True)
             wget.download(t_link["href"], out=sys.argv[1].split("/")[5] + str(count) + ".torrent")	
             print("Descargado capítulo " + str(count))
             count += 1
